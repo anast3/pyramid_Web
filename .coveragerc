@@ -1,0 +1,3 @@
+[run]
+source = pyramid_Web
+omit = pyramid_Web/test*
