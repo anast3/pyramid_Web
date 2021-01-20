@@ -19,7 +19,6 @@ def default(request):
 
 @view_config(route_name='register', renderer='../templates/main.jinja2')
 def register(request):
-    refresh(request)
     lists = get_lists(request)
     if "service" in request.params:
         serv_type = int(request.params["service"])

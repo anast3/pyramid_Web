@@ -20,7 +20,7 @@
   {% if try %}
       {% if success %}
         <p class="response">Ваш номер: {{ record.id }}</p>
-        <p class="response">Ваше время: {{ record.time }}</p>
+        <p class="response">Ваше время: {{ record.time.strftime("%H:%M") }}</p>
           <p class="response">Ваше место в очереди: {{ number }}</p>
       {% else %}
         <p class="response">Записи на сегодня нет.</p>
@@ -32,7 +32,7 @@
       {% for record in list %}
           <tr>
           <td>{{ record.id}}</td>
-          <td>{{ record.time }}</td>
+          <td>{{ record.time.strftime("%H:%M") }}</td>
           </tr>
       {% endfor %}
       </table>
