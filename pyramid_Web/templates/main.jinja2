@@ -21,6 +21,7 @@
       {% if success %}
         <p class="response">Ваш номер: {{ record.id }}</p>
         <p class="response">Ваше время: {{ record.time }}</p>
+          <p class="response">Ваше место в очереди: {{ number }}</p>
       {% else %}
         <p class="response">Записи на сегодня нет.</p>
       {% endif %}
@@ -35,8 +36,12 @@
           </tr>
       {% endfor %}
       </table>
-      <p></p>
+      <br>
   {% endfor %}
+
+  <form action="/" method="GET">
+      <input type="submit" value="Обновить">
+  </form>
 
 </div>
 {% endblock content %}
