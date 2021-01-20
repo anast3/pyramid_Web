@@ -1,44 +1,29 @@
-pyramid_Web
-===========
+Электронная очередь на примере банка с тремя услугами
 
-Getting Started
----------------
+Все релизовано на одной странице с разными обработчиками.
+Изначально клиент видит выбор услуги и очереди, которые уже сформировались ("/").
+Очередь ведется на сегодняшний день в три разных кабинета, банк работает с 10 до 18, на прием тратится 30 минут.
+Когда пользователь выбирает услугу ("/register"), ему выдается номер, назначается время и указывается место в очереди.
 
-- Change directory into your newly created project if not already there. Your
-  current directory should be the same as this README.txt file and setup.py.
+Разметки лежат в templates и сделаны на шаблонизаторе Jinja.
+При регистрации записи (models/recordmodel) сохраняются в БД SQLite через Алхимию.
+При загрузке страницы старые записи (их время прошло) удаляются.
 
+Контроллеры установлены во views/default.
+Их два:
+default - подгружает из базы данные, удаляет старые.
+register - 1) проверяет, выбрана ли услуга
+    2) получает записи в выбранный кабинет (услугу)
+    3) если записей нет и время приемное, запускает человека первым в очереди по текущему времени
+    4) если записи есть, к последней добавляется полчаса, и если время получилось приемное, происходит запись
+
+Для запуска:
     cd pyramid_Web
-
-- Create a Python virtual environment, if not already created.
-
     python3 -m venv env
-
-- Upgrade packaging tools, if necessary.
-
     env/bin/pip install --upgrade pip setuptools
-
-- Install the project in editable mode with its testing requirements.
-
     env/bin/pip install -e ".[testing]"
-
-- Initialize and upgrade the database using Alembic.
-
-    - Generate your first revision.
-
-        env/bin/alembic -c development.ini revision --autogenerate -m "init"
-
-    - Upgrade to that revision.
-
-        env/bin/alembic -c development.ini upgrade head
-
-- Load default data into the database using a script.
-
+    env/bin/alembic -c development.ini revision --autogenerate -m "init"
+    env/bin/alembic -c development.ini upgrade head
     env/bin/initialize_pyramid_Web_db development.ini
-
-- Run your project's tests.
-
     env/bin/pytest
-
-- Run your project.
-
     env/bin/pserve development.ini
