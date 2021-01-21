@@ -1,47 +1,75 @@
+{% extends "index.jinja2" %}
+
+{% block css %}<link rel="stylesheet" href="../static/css/main.css">{% endblock css %}
+
+{% block js %}
+<script>
+  const bannerWords = ["Берите", "Кредит", "У нас"];
+  const bannerImgPaths = ['/static/img/banner-img1.jpg', '/static/img/banner-img2.jpg', '/static/img/banner-img3.jpg'];
+  let counter = 1;
+  let banner = document.getElementsByClassName("banner")[0];
+  let bannerText = document.getElementById("banner_text");
+  setInterval(function() {
+    if (counter == 3) {
+      counter = 0;
+    } 
+    bannerText.innerHTML = bannerWords[counter];
+    banner.style.backgroundImage = `url(${bannerImgPaths[counter]})`;
+    counter++;
+  }, 4000);
+</script>
+{% endblock js %}
+
 {% block content %}
-<div class="content">
+<div class="banner">
+  <span id="banner_text">Берите</span>
+</div>
+<div class="registration">
+  <h1>Запись на прием</h1>
   <form action="/register" method="POST">
-  <p>Выберите услугу</p>
-    <div>
-        <input type="radio" name="service" id="service-card" value="0">
-        <label for="service-card">Карты и счета</label>
-    </div>
-    <div>
-        <input type="radio" name="service" id="service-credit" value="1">
-        <label for="service-credit">Кредиты</label>
-    </div>
-    <div>
-        <input type="radio" name="service" id="service-consult" value="2">
-        <label for="service-consult">Консультация</label>
-    </div>
-    <p><input type="submit" value="Встать в очередь"></p>
+    <select name="service">
+      <option value="" disabled selected hidden>Выберите услугу</option>
+      <option value="0">Оформить кредит</option>
+      <option value="1">Взять кредит</option>
+      <option value="2">Консультация</option>
+    </select>
+    <br>
+    <input type="submit" value="В очередь"></p>
   </form>
 
   {% if try %}
+      <div class="response">
       {% if success %}
-        <p class="response">Ваш номер: {{ record.id }}</p>
-        <p class="response">Ваше время: {{ record.time.strftime("%H:%M") }}</p>
-          <p class="response">Ваше место в очереди: {{ number }}</p>
+        <p>Ваш номер: {{ record.id }}</p>
+        <p>Ваше время: {{ record.time.strftime("%H:%M") }}</p>
+        <p>Ваше место в очереди: {{ number }}</p>
       {% else %}
-        <p class="response">Записи на сегодня нет.</p>
-      {% endif %}
+        <p>Записи на сегодня нет.</p>
+      {% endif %}   
+      </div>
   {% endif %}
-
+</div>
+<div class="post_registration">
+  <h1>Очереди на сегодня</h1>
+  <div class="cabinets">
+    <span class="cabinet">Кабинет 1<br><span class="service">Оформление карты</span></span>
+    <span class="cabinet">Кабинет 2<br><span class="service">Кредит</span></span>
+    <span class="cabinet">Кабинет 3<br><span class="service">Консультации</span></span>
+  </div>
+  <div class="tables">
   {% for list in lists %}
-      <table border="1px">
-      {% for record in list %}
-          <tr>
-          <td>{{ record.id}}</td>
+    <table>
+    {% for record in list %}
+        <tr>
+          <td>{{ record.id }} —</td>
           <td>{{ record.time.strftime("%H:%M") }}</td>
-          </tr>
-      {% endfor %}
-      </table>
-      <br>
+        </tr>
+    {% endfor %}
+    </table>
   {% endfor %}
-
+  </div>
   <form action="/" method="GET">
       <input type="submit" value="Обновить">
   </form>
-
 </div>
 {% endblock content %}
