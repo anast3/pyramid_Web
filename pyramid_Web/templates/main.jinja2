@@ -2,9 +2,27 @@
 
 {% block css %}<link rel="stylesheet" href="../static/css/main.css">{% endblock css %}
 
+{% block js %}
+<script>
+  const bannerWords = ["Берите", "Кредит", "У нас"];
+  const bannerImgPaths = ['/static/img/banner-img1.jpg', '/static/img/banner-img2.jpg', '/static/img/banner-img3.jpg'];
+  let counter = 1;
+  let banner = document.getElementsByClassName("banner")[0];
+  let bannerText = document.getElementById("banner_text");
+  setInterval(function() {
+    if (counter == 3) {
+      counter = 0;
+    } 
+    bannerText.innerHTML = bannerWords[counter];
+    banner.style.backgroundImage = `url(${bannerImgPaths[counter]})`;
+    counter++;
+  }, 4000);
+</script>
+{% endblock js %}
+
 {% block content %}
 <div class="banner">
-  <span id="banner_text">Берите кредит у нас</span>
+  <span id="banner_text">Берите</span>
 </div>
 <div class="registration">
   <h1>Запись на прием</h1>
@@ -20,14 +38,14 @@
   </form>
 
   {% if try %}
-      {% if success %}
       <div class="response">
+      {% if success %}
         <p>Ваш номер: {{ record.id }}</p>
         <p>Ваше время: {{ record.time.strftime("%H:%M") }}</p>
         <p>Ваше место в очереди: {{ number }}</p>
       {% else %}
         <p>Записи на сегодня нет.</p>
-      {% endif %}
+      {% endif %}   
       </div>
   {% endif %}
 </div>
