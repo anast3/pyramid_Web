@@ -1,0 +1,9 @@
+cd pyramid_Web
+python3 -m venv env
+env/bin/pip install --upgrade pip setuptools
+env/bin/pip install -e ".[testing]"
+env/bin/alembic -c development.ini revision --autogenerate -m "init"
+env/bin/alembic -c development.ini upgrade head
+env/bin/initialize_pyramid_Web_db development.ini
+env/bin/pytest
+env/bin/pserve development.ini

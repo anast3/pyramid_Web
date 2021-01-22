@@ -16,14 +16,3 @@ register - 1) проверяет, выбрана ли услуга
     2) получает записи в выбранный кабинет (услугу)
     3) если записей нет и время приемное, запускает человека первым в очереди по текущему времени
     4) если записи есть, к последней добавляется полчаса, и если время получилось приемное, происходит запись
-
-Для запуска:
-    cd pyramid_Web
-    python3 -m venv env
-    env/bin/pip install --upgrade pip setuptools
-    env/bin/pip install -e ".[testing]"
-    env/bin/alembic -c development.ini revision --autogenerate -m "init"
-    env/bin/alembic -c development.ini upgrade head
-    env/bin/initialize_pyramid_Web_db development.ini
-    env/bin/pytest
-    env/bin/pserve development.ini
