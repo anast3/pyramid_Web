@@ -13,7 +13,7 @@ class CardModel(Base):
     __tablename__ = 'cards'
     id = Column(Integer, primary_key=True)
     number = Column(Text)  # номер карты
-    client_id = Column(Integer, ForeignKey("record.id"))  # id заказчика
+    client_id = Column(Text)  # имя заказчика
     validity = Column(Text)  # срок действия
 
 

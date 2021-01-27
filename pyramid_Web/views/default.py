@@ -7,12 +7,12 @@ from sqlalchemy.exc import DBAPIError
 
 from .. import models
 from ..models import RecordModel
-from ..utils.time_utils import today22h, today10h, refresh
+from ..utils.time_utils import today22h, today10h, refresh, isBefore
 
 
 @view_config(route_name='home', renderer='../templates/main.jinja2')
 def default(request):
-    refresh(request)
+    # refresh(request) теперь записи удаляет оператор
     lists = get_lists(request)
     return {'try': False, 'lists': lists}
 
@@ -28,7 +28,10 @@ def register(request):
         if len(records) != 0:
             last_record = records[-1]
             if last_record.time + timedelta(minutes=5) < today22h():
-                record = add_record(request, serv_type, last_record.time + timedelta(minutes=5))
+                if isBefore(last_record.time):
+                    record = add_record(request, serv_type, datetime.now(tz=None))
+                else:
+                    record = add_record(request, serv_type, last_record.time + timedelta(minutes=5))
         else:
             if datetime.now(tz=None) < today10h():
                 record = add_record(request, serv_type, today10h())
