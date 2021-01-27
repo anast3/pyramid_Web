@@ -7,7 +7,7 @@ from sqlalchemy.exc import DBAPIError
 
 from .. import models
 from ..models import RecordModel
-from ..utils.time_utils import today18h, today10h, refresh
+from ..utils.time_utils import today20h, today10h, refresh
 
 
 @view_config(route_name='home', renderer='../templates/main.jinja2')
@@ -27,12 +27,12 @@ def register(request):
         records = request.dbsession.query(models.RecordModel).filter_by(room=serv_type).all()
         if len(records) != 0:
             last_record = records[-1]
-            if last_record.time + timedelta(minutes=30) < today18h():
-                record = add_record(request, serv_type, last_record.time + timedelta(minutes=30))
+            if last_record.time + timedelta(minutes=5) < today20h():
+                record = add_record(request, serv_type, last_record.time + timedelta(minutes=5))
         else:
             if datetime.now(tz=None) < today10h():
                 record = add_record(request, serv_type, today10h())
-            elif datetime.now(tz=None) < today18h():
+            elif datetime.now(tz=None) < today20h():
                 record = add_record(request, serv_type, datetime.now(tz=None))
 
         lists = get_lists(request)
