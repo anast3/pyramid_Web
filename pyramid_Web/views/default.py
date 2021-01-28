@@ -28,7 +28,7 @@ def register(request):
         if len(records) != 0:
             last_record = records[-1]
             if last_record.time + timedelta(minutes=5) < today22h():
-                if isBefore(last_record.time):
+                if isBefore(last_record.time + timedelta(minutes=6)):
                     record = add_record(request, serv_type, datetime.now(tz=None))
                 else:
                     record = add_record(request, serv_type, last_record.time + timedelta(minutes=5))

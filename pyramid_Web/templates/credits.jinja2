@@ -3,7 +3,7 @@
 
 {% block content %}
 <div>
-  <h1>Очередь на получение карт</h1>
+  <h1>Очередь на получение кредитов</h1>
   <div class="post_registration">
       <div class="tables">
         <table>
@@ -17,28 +17,31 @@
       </div>
   </div>
     <div class="registration">
-      <h1>Оформить карту</h1>
-      <form action="/admin/card_close">
+      <h1>Оформить кредит</h1>
+      <form action="/admin/close_credit">
         <p><input type="text" name="id" placeholder="Введите id обслуженного клиента"></p>
-        <p><input type="text" name="num" placeholder="Введите номер его карты"></p>
-        <p><input type="text" name="val" placeholder="Введите срок ее действия"></p>
         <p><input type="text" name="name" placeholder="Введите имя обслуженного клиента"></p>
+        <p><input type="text" name="sum" placeholder="Введите сумму кредита"></p>
+        <p><input type="text" name="per" placeholder="Введите процент кредита"></p>
+        <p><input type="text" name="val" placeholder="Введите срок погашения"></p>
         <p><input type="submit" value="Оформить карту"></p>
       </form>
     </div>
     <div class="post_registration">
-    <h1>Выданные карты</h1>
+    <h1>Выданные кредиты</h1>
       <div class="tables">
         <table>
         <tr>
-          <td> Номер карты </td>
           <td> Имя </td>
-          <td> Срок действия </td>
+          <td> Сумма </td>
+          <td> Процент </td>
+          <td> Срок </td>
         </tr>
-        {% for record in list_cards %}
+        {% for record in list_credits %}
             <tr>
-              <td>{{ record.number }} </td>
-              <td>{{ record.client_id }}</td>
+              <td>{{ record.client_id }} </td>
+              <td>{{ record.amount }}</td>
+              <td>{{ record.percent }}</td>
               <td>{{ record.validity }}</td>
             </tr>
         {% endfor %}
