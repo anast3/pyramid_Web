@@ -2,10 +2,10 @@ from datetime import datetime, timedelta
 from .. import models
 
 
-def today20h():
+def today22h():
     today = datetime.today()
     midnight = datetime(today.year, today.month, today.day)
-    return midnight + timedelta(hours=20)
+    return midnight + timedelta(hours=22)
 
 
 def today10h():

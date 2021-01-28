@@ -1,0 +1,50 @@
+{% extends "index.jinja2" %}
+{% block css %}<link rel="stylesheet" href="../static/css/main.css">{% endblock css %}
+
+{% block content %}
+<div>
+  <h1>Очередь на получение карт</h1>
+  <div class="post_registration">
+      <div class="tables">
+        <table>
+        {% for record in list_queue %}
+            <tr>
+              <td>{{ record.id }} —</td>
+              <td>{{ record.time.strftime("%H:%M") }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+      </div>
+  </div>
+    <div class="registration">
+      <h1>Оформить карту</h1>
+      <form action="/admin/card_close">
+        <p><input type="text" name="id" placeholder="Введите id обслуженного клиента"></p>
+        <p><input type="text" name="num" placeholder="Введите номер его карты"></p>
+        <p><input type="text" name="val" placeholder="Введите срок ее действия"></p>
+        <p><input type="text" name="name" placeholder="Введите имя обслуженного клиента"></p>
+        <p><input type="submit" value="Оформить карту"></p>
+      </form>
+    </div>
+    <div class="post_registration">
+    <h1>Выданные карты</h1>
+      <div class="tables">
+        <table>
+        <tr>
+          <td> Номер карты </td>
+          <td> Имя </td>
+          <td> Срок действия </td>
+        </tr>
+        {% for record in list_cards %}
+            <tr>
+              <td>{{ record.number }} </td>
+              <td>{{ record.client_id }}</td>
+              <td>{{ record.validity }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+      </div>
+  </div>
+</div>
+
+{% endblock content %}
